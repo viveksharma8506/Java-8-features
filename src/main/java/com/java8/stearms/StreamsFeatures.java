@@ -134,6 +134,26 @@ public class StreamsFeatures {
                 .map(i -> i *i )
                 .filter(x -> x % 3 == 0)
                 .findFirst();
+        
+        
+        //Reduce Operation  :
+        
+        Integer reduce = intList.stream().reduce(0, (a, b) -> a + b);
+        //OR
+        Integer sum =  intList.stream().reduce(0,Integer::sum);
+        
+        //Max
+        Optional<Integer> reduce1 = intList.stream().reduce(Integer::max);
+
+        //You could have equally well used the lambda (x,y)->x<y?x:y instead of Integer::min, but the
+        //latter is easier to read.
+        Optional<Integer> reduce2 = intList.stream().reduce(Integer::min);
+
+
+
+        //How would you count the number of dishes in a stream using the map and reduce methods?
+
+        menu.stream().map(dish -> 1).reduce(0,Integer::sum);
     }
 
 }
