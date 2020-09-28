@@ -2,6 +2,7 @@ package com.java8.stearms;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class StreamsFeatures {
@@ -105,23 +106,34 @@ public class StreamsFeatures {
       array.stream().
               forEach(ints -> Arrays.stream(ints).forEach(System.out::println));
 
-
-
-
-
-        numbers1.stream()
+        // pair divisible by 3
+        List<int[]> collect = numbers1.stream()
                 .flatMap(integer -> numbers2.stream()
-                        .map(integer1 -> new int[]{integer, integer1})
-                        .filter(ints ->{} )
-                        .collect(Collectors.toList());
+                        .filter(i -> i + integer % 3 == 0)
+                        .map(integer1 -> new int[]{integer, integer1}))
+                .collect(Collectors.toList());
+
+
+        // find , find any , all match  none match
 
 
 
-        /* Java 8 sort without stream*/
-        /* menu.sort(Comparator.comparing(Dish :: getName)
-                .reversed()
-                .thenComparing(Dish::getCalories));
-        System.out.println(menu);*/
+
+        menu.stream()
+                .filter(Dish::isVegetarian)
+                .findAny() // return optional here
+                .ifPresent(System.out::println); // evaluation on optional values
+
+
+        //find first
+        //the code that follows, given a list of numbers,
+        //finds the first square that’s divisible by 3:
+
+        List<Integer> intList= Arrays.asList(1,2,3,4,5,6,7);
+        Optional<Integer> first = intList.stream()
+                .map(i -> i *i )
+                .filter(x -> x % 3 == 0)
+                .findFirst();
     }
 
 }
