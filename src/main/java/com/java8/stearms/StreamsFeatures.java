@@ -136,7 +136,7 @@ public class StreamsFeatures {
                 .findFirst();
         
         
-        //Reduce Operation  :
+        //Reduce Operation folds :
         
         Integer reduce = intList.stream().reduce(0, (a, b) -> a + b);
         //OR
