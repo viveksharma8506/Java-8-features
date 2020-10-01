@@ -243,6 +243,14 @@ public class StreamsFeatures {
                 t -> new int[]{t[1], t[0]+t[1]})
                 .limit(20)
                 .forEach(t -> System.out.println("(" + t[0] + "," + t[1] +")"));
+
+
+        // // Stream genarate - to generate infinite Stream -Must provide Limit
+
+        Stream.generate(Math::random)
+                .limit(5)
+                .forEach(System.out::println);
     }
+
 
 }
