@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class StreamsFeatures {
 
@@ -204,9 +205,44 @@ public class StreamsFeatures {
                 .flatMap(a->IntStream.rangeClosed(1,100)
                 .mapToObj(b->new double [] {a,b, Math.sqrt(a*a+b*b)}))
                 .filter(t->t[2]%1==0)
-                .forEach(t-> Arrays.stream(t).forEach(System.out::println));
+                .forEach(t-> Arrays.stream(t).forEach(System.out::println)); //Streams from arrays
 
         //TO Do - get result in expected format
+
+
+
+       //. Streams from values
+
+        Stream<String> stream = Stream.of("Java 8 ", "Lambdas ", "In ", "Action");
+        stream.map(String::toUpperCase)
+                .forEach(System.out::println);
+
+        Stream<String> emptyStream = Stream.empty();
+
+//Iterate
+//Let’s look at a simple example of how to use iterate before we explain it:
+        Stream.iterate(0, n -> n + 2)
+                .limit(10)
+
+                .forEach(System.out::println);
+
+
+        //Iterate
+       // Let’s look at a simple example of how to use iterate before we explain it:
+
+        // Fibonacci series
+        Stream.iterate(new int[]{0, 1},
+                t -> new int[]{t[1],t[0] + t[1]})
+                .limit(20)
+                .map(t -> t[0])
+                .forEach(System.out::println);
+
+
+        // Fibonacci series -pairs
+        Stream.iterate(new int[]{0, 1},
+                t -> new int[]{t[1], t[0]+t[1]})
+                .limit(20)
+                .forEach(t -> System.out.println("(" + t[0] + "," + t[1] +")"));
     }
 
 }
