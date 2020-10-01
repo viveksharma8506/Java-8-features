@@ -3,7 +3,9 @@ package com.java8.stearms;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class StreamsFeatures {
 
@@ -154,6 +156,57 @@ public class StreamsFeatures {
         //How would you count the number of dishes in a stream using the map and reduce methods?
 
         menu.stream().map(dish -> 1).reduce(0,Integer::sum);
+
+
+       // Java 8 introduces three primitive specialized stream interfaces to tackle this issue,
+        // IntStream, DoubleStream, and LongStream, that respectively specialize the elements of a stream to be int, long, and double—and
+        // thereby avoid hidden boxing costs.
+
+        int calories = menu.stream()
+                .mapToInt(Dish::getCalories)
+                .sum();
+
+        // Numeric Streams and there specilaized optinals
+        //The sum example was convenient because it has a default value: 0. But if you want to calculate
+        //the maximum element in an IntStream, you need something different because 0 is a wrong
+        //result. How can you differentiate that the stream has no element and that the real maximum is 0?
+        //Earlier we introduced the Optional class, which is a container that indicates the presence or
+        //absence of a value. Optional can be parameterized with reference types such as Integer, String, and so on. There’s a primitive specialized version of Optional as well for the three primitive
+        //stream specializations: OptionalInt, OptionalDouble, and OptionalLong.
+
+        OptionalInt maxCalories = menu.stream()
+                .mapToInt(Dish::getCalories)
+                .max();
+
+
+
+        //Java 8 introduces two
+        //static methods available on IntStream and LongStream to help generate such ranges: range and
+        ///rangeClosed. Both methods take the starting value of the range as the first parameter and the
+       // end value of the range as the second parameter. But range is exclusive, whereas rangeClosed is
+        //inclusive. Let’s look at an example:
+
+        long count = IntStream.rangeClosed(1, 100)
+                .filter(integer -> integer % 2 == 0)
+                .count();
+
+        //if you were using
+        //IntStream.range(1, 100) instead, the result would be 49 even numbers because range is
+        //exclusive.
+
+        //t the famous Greek mathematician Pythagoras discovered
+        //that certain triples of numbers (a, b, c) satisfy the formula a * a + b * b = c * c where a, b, and c
+        //are integers. For example, (3, 4, 5) is a valid Pythagorean triple because 3 * 3 + 4 * 4 = 5 * 5 or 9
+        //+ 16 = 25. There are an infinite number of such triples
+        //generate all such triple in range 1 to 100
+
+        IntStream.rangeClosed(1,100).boxed()
+                .flatMap(a->IntStream.rangeClosed(1,100)
+                .mapToObj(b->new double [] {a,b, Math.sqrt(a*a+b*b)}))
+                .filter(t->t[2]%1==0)
+                .forEach(t-> Arrays.stream(t).forEach(System.out::println));
+
+        //TO Do - get result in expected format
     }
 
 }

@@ -39,6 +39,7 @@ public class TradeDemo {
                 .distinct()
                 .collect(Collectors.toList());
 
+        System.out.println("list====="+collect);
       //  collect.stream().forEach(System.out::println);
 
         //  3. Find all traders from Cambridge and sort them by name.
@@ -84,5 +85,9 @@ public class TradeDemo {
 
         transactions.stream().min(Comparator.comparing(Transaction::getValue))
                 .ifPresent(System.out::println);
+
+
+
+
     }
 }
